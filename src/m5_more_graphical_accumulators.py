@@ -9,8 +9,8 @@ Additionally, it emphasizes that you must
 before you can implement a solution to the problem in Python. 
   
 Authors: David Mutchler, Vibha Alangar, Matt Boutell, Dave Fisher, Mark Hays,
-         Aaron Wilkin, their colleagues, and PUT_YOUR_NAME_HERE.
-"""  # TODO: 1. PUT YOUR NAME IN THE ABOVE LINE.
+         Aaron Wilkin, their colleagues, and Zack Z.
+"""  # Done: 1. PUT YOUR NAME IN THE ABOVE LINE.
 
 import rosegraphics as rg
 
@@ -98,7 +98,7 @@ def draw_squares_from_circle(n, circle, window):
       :type window: rg.RoseWindow
     """
     # -------------------------------------------------------------------------
-    # TODO: 2. Implement and test this function.
+    # Done: 2. Implement and test this function.
     #          Tests have been written for you (above).
     #
     # CONSIDER using the ACCUMULATOR IN GRAPHICS pattern,
@@ -112,6 +112,13 @@ def draw_squares_from_circle(n, circle, window):
     ###########################################################################
     # -------------------------------------------------------------------------
 
+    circle.attach_to(window)
+
+    for k in range(n):
+        s1=rg.Square(rg.Point(circle.center.x+circle.radius*k,circle.center.y+circle.radius*k),circle.radius*2)
+        s1.attach_to(window)
+    window.render()
+
 
 def run_test_draw_circles_from_rectangle():
     """ Tests the   draw_circles_from_rectangle  function. """
@@ -120,6 +127,37 @@ def run_test_draw_circles_from_rectangle():
     print('Testing the  draw_circles_from_rectangle  function:')
     print('  See the graphics windows that pop up.')
     print('--------------------------------------------------')
+
+    window1=rg.RoseWindow(720,500,'2 tests on one window')
+
+    #Test 1 & 2 on same window
+    r1=rg.Rectangle(rg.Point(400,250),rg.Point(440,325))
+    r1.fill_color='green'
+    r1.outline_color='black'
+    r1.outline_thickness=5
+
+    draw_circles_from_rectangle(4,5,r1,window1)
+
+    r2=rg.Rectangle(rg.Point(600,400),rg.Point(500,450))
+    r2.fill_color='blue'
+    r2.outline_color='red'
+    r2.outline_thickness=3
+
+    draw_circles_from_rectangle(8,3,r2,window1)
+    window1.close_on_mouse_click()
+
+    #Test 3 on seperate window
+
+    window2=rg.RoseWindow(620,380,'One Test One Window')
+
+    r3=rg.Rectangle(rg.Point(350,280),rg.Point(375,330))
+    r3.fill_color='yellow'
+    r3.outline_color='brown'
+    r3.outline_thickness=5
+
+    draw_circles_from_rectangle(6,8,r3,window2)
+    window2.close_on_mouse_click()
+
 
     # -------------------------------------------------------------------------
     # TODO: 3. Implement this TEST function.
@@ -189,6 +227,39 @@ def draw_circles_from_rectangle(m, n, rectangle, window):
     #          ** FIRST DO A CONCRETE EXAMPLE BY HAND! **
     ###########################################################################
     # -------------------------------------------------------------------------
+
+    rectangle.attach_to(window)
+
+    diameter1=rectangle.corner_2.y-rectangle.corner_1.y
+    radius1=.5*diameter1
+
+    x1=rectangle.corner_1.x-radius1
+    y1=rectangle.corner_2.y-radius1
+
+    for _ in range (m):
+        c1=rg.Circle(rg.Point(x1,y1),radius1)
+        c1.fill_color=rectangle.fill_color
+        c1.attach_to(window)
+
+        x1=x1-diameter1
+
+    diameter2=rectangle.corner_2.x-rectangle.corner_1.x
+    radius2=diameter2/2
+
+    x2=rectangle.corner_2.x-radius2
+    y2=rectangle.corner_1.y-radius2
+
+    for _ in range (n):
+        c2=rg.Circle(rg.Point(x2,y2),radius2)
+        c2.outline_color=rectangle.outline_color
+        c2.attach_to(window)
+
+
+        y2=y2-diameter2
+
+    window.render()
+
+
 
 
 def run_test_draw_lines_from_rectangles():
@@ -281,6 +352,12 @@ def draw_lines_from_rectangles(rectangle1, rectangle2, n, window):
     #          ** FIRST DO A CONCRETE EXAMPLE BY HAND! **
     ###########################################################################
     # -------------------------------------------------------------------------
+
+    rectangle1.attach_to(window)
+    rectangle2.attach_to(window)
+
+    x1=rectangle1.corner_2.x-(rectangle1.corner_1.x/2)
+
 
 
 # -----------------------------------------------------------------------------
