@@ -150,7 +150,7 @@ def run_test_draw_circles_from_rectangle():
 
     window2=rg.RoseWindow(620,380,'One Test One Window')
 
-    r3=rg.Rectangle(rg.Point(350,280),rg.Point(375,330))
+    r3=rg.Rectangle(rg.Point(375,330),rg.Point(350,280))
     r3.fill_color='yellow'
     r3.outline_color='brown'
     r3.outline_thickness=5
@@ -230,11 +230,46 @@ def draw_circles_from_rectangle(m, n, rectangle, window):
 
     rectangle.attach_to(window)
 
-    diameter1=rectangle.corner_2.y-rectangle.corner_1.y
-    radius1=.5*diameter1
 
-    x1=rectangle.corner_1.x-radius1
-    y1=rectangle.corner_2.y-radius1
+    diameter2 = rectangle.corner_2.x - rectangle.corner_1.x
+    radius2 = diameter2 / 2
+
+    if rectangle.corner_1.x>rectangle.corner_2.x:
+        diameter2 = rectangle.corner_1.x - rectangle.corner_2.x
+        radius2 = diameter2 / 2
+        if rectangle.corner_1.y<rectangle.corner_2.y:
+            diameter1 = rectangle.corner_2.y - rectangle.corner_1.y
+            radius1 = .5 * diameter1
+            x1=rectangle.corner_2.x-radius1
+            y1=rectangle.corner_2.y-radius1
+            x2=rectangle.corner_1.x-radius2
+            y2=rectangle.corner_1.x-radius2
+        else:
+            diameter1 = rectangle.corner_1.y - rectangle.corner_2.y
+            radius1 = .5 * diameter1
+            x1=rectangle.corner_2.x-radius1
+            y1=rectangle.corner_1.y-radius1
+            x2=rectangle.corner_1.x-radius2
+            y2=rectangle.corner_2.y-radius2
+    else:
+        diameter2 = rectangle.corner_2.x - rectangle.corner_1.x
+        radius2 = diameter2 / 2
+        if rectangle.corner_1.y<rectangle.corner_2.y:
+            diameter1 = rectangle.corner_2.y - rectangle.corner_1.y
+            radius1 = .5 * diameter1
+            x1=rectangle.corner_1.x-radius1
+            y1=rectangle.corner_2.y-radius1
+            x2=rectangle.corner_2.x-radius2
+            y2=rectangle.corner_1.y-radius2
+        else:
+            diameter1 = rectangle.corner_1.y - rectangle.corner_2.y
+            radius1 = .5 * diameter1
+            x1=rectangle.corner_1.x-radius1
+            y1=rectangle.corner_1.y-radius1
+            x2=rectangle.corner_2.x-radius2
+            y2=rectangle.corner_2.y-radius2
+
+
 
     for _ in range (m):
         c1=rg.Circle(rg.Point(x1,y1),radius1)
@@ -242,12 +277,6 @@ def draw_circles_from_rectangle(m, n, rectangle, window):
         c1.attach_to(window)
 
         x1=x1-diameter1
-
-    diameter2=rectangle.corner_2.x-rectangle.corner_1.x
-    radius2=diameter2/2
-
-    x2=rectangle.corner_2.x-radius2
-    y2=rectangle.corner_1.y-radius2
 
     for _ in range (n):
         c2=rg.Circle(rg.Point(x2,y2),radius2)
